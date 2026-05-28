@@ -26,16 +26,43 @@ def predict(image):
 
     image = transform(image).unsqueeze(0)
 
+   ## with torch.no_grad():
+    ##    outputs = model(image)
+    ##    _, predicted = torch.max(outputs, 1)
+
+   ## return classes[predicted.item()]
+
+## V2 ENHANCEMENT TO ADD CONFIDENCE LEVEL TO  DETECTOR OUTPUT
     with torch.no_grad():
         outputs = model(image)
-        _, predicted = torch.max(outputs, 1)
+        probabilities = torch.nn.functional.softmax(outputs[0], dim=0)
+        confidence, predicted = torch.max(probabilities, 0)
+        label = classes[predicted.item()]
+        confidence_percent = round(confidence.item() * 100, 2)
+    #return f"{label} ({confidence_percent}% model confidence)"
+    #V3: adding better descriptions in the output for UI enhancement
+        safe_probability = round(probabilities[1].item() * 100, 2)
+        risky_probability = round(probabilities[0].item() * 100, 2)
 
-    return classes[predicted.item()]
+    if label == "Risky Form":
 
+        recommendation = "Recommended correction: maintain a neutral spine and stable shoulder alignment."
+
+    else:
+
+        recommendation = "Form appears stable. Continue maintaining alignment."
+
+    return f"""
+        Prediction: {label}
+        Safe Form Probability: {safe_probability}%
+        Risky Form Probability: {risky_probability}%
+        {recommendation}
+"""
 demo = gr.Interface(
     fn=predict,
     inputs=gr.Image(type="pil"),
     outputs="text",
+    #outputs="json",
     title="Pilates Posture Risk Detector")
 
 ##demo.launch()
