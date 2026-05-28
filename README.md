@@ -1,3 +1,12 @@
+---
+title: Pilates Form Risk Detector
+sdk: gradio
+sdk_version: "4.44.1"
+python_version: "3.8"
+app_file: app/app.py
+pinned: false
+---
+
 # pilates-form-risk-detector
 Exploring computer vision for real-time movement analysis, injury risk detection, and human performance monitoring through a Pilates posture classification prototype using transfer learning and data augmentation.
 
@@ -35,9 +44,8 @@ Two training scripts were created:
 This allows comparison between a baseline model and an augmented model.
 
 ## Demo
-Live app:
-
-https://830ded73747abf5cb4.gradio.live
+HuggingFace: https://huggingface.co/spaces/hadilghazal/pilates-form-risk-detector
+Gradio app: https://830ded73747abf5cb4.gradio.live
 
 ## How to Run
 

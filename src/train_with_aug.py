@@ -12,6 +12,15 @@ train_transforms = transforms.Compose([
     transforms.ColorJitter(brightness=0.3),
     transforms.ToTensor()
 ])
+
+from PIL import Image
+
+image = Image.open("data/safe_form/safe_plank_form1.png")
+
+augmented_image = train_transforms(image)
+
+transforms.ToPILImage()(augmented_image).save("augmented_example.png")
+
 # No augment pipeline
 basic_transforms = transforms.Compose([
     transforms.Resize((224, 224)),
