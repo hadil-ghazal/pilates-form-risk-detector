@@ -1,10 +1,14 @@
 torch
 torchvision
 torchaudio
+
 opencv-python
 pillow
+numpy
+pandas
+
 matplotlib
 scikit-learn
-gradio
-numpy
+mediapipe
+
 gradio
